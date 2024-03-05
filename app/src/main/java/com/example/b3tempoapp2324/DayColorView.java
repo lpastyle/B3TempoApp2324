@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -61,18 +60,17 @@ public class DayColorView extends View {
 
         // Set up a default TextPaint object
         textPaint = new TextPaint();
-        textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextAlign(Paint.Align.LEFT);
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements();
+        setTextPaintAndMeasurements();
     }
 
-    private void invalidateTextPaintAndMeasurements() {
-        textPaint.setTextSize(mExampleDimension);
-        textPaint.setColor(mExampleColor);
-        textWidth = textPaint.measureText(mExampleString);
+    private void setTextPaintAndMeasurements() {
+        // setup a default TextPaint object
+        textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextAlign(Paint.Align.LEFT);
+        textPaint.setTextSize(captionTextSize);
+        textPaint.setColor(captionTextColor);
 
+        textWidth = textPaint.measureText(captionText);
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
         textHeight = fontMetrics.bottom;
     }
@@ -108,7 +106,7 @@ public class DayColorView extends View {
      */
     public void setExampleColor(int exampleColor) {
         mExampleColor = exampleColor;
-        invalidateTextPaintAndMeasurements();
+        setTextPaintAndMeasurements();
     }
 
 
