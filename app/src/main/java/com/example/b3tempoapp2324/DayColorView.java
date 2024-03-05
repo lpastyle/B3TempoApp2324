@@ -49,7 +49,7 @@ public class DayColorView extends View {
                 attrs, R.styleable.DayColorView, defStyle, 0);
 
         String text = a.getString(R.styleable.DayColorView_captionText);
-        captionText = text == null ? "Preview Text" : text;
+        captionText = text == null ? context.getString(R.string.not_set) : text;
 
         captionTextColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionTextColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
