@@ -10,14 +10,16 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * TODO: document your custom view class.
  */
 public class DayColorView extends View {
-    private String mExampleString; // TODO: use a default from R.string...
-    private int mExampleColor = Color.RED; // TODO: use a default from R.color...
-    private float mExampleDimension = 0; // TODO: use a default from R.dimen...
-    private Drawable mExampleDrawable;
+    private String captionText;
+    private int captionTextColor = Color.BLACK;
+    private float captionTextSize = 0;
+    private int dayCircleColor = Color.GRAY;
 
     private TextPaint mTextPaint;
     private float mTextWidth;
@@ -25,40 +27,34 @@ public class DayColorView extends View {
 
     public DayColorView(Context context) {
         super(context);
-        init(null, 0);
+        init(context,null, 0);
     }
 
     public DayColorView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
+        init(context, attrs, 0);
     }
 
     public DayColorView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs, defStyle);
+        init(context, attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
+    private void init(Context context, AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.DayColorView, defStyle, 0);
 
-        String text = a.getString(R.styleable.DayColorView_exampleString);
-        mExampleString = text == null ? "Preview Text" : text;
-        mExampleColor = a.getColor(
-                R.styleable.DayColorView_exampleColor,
-                mExampleColor);
+        String text = a.getString(R.styleable.DayColorView_captionText);
+        captionText = text == null ? "Preview Text" : text;
+
+        captionTextColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionTextColor);
+
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
-        mExampleDimension = a.getDimension(
-                R.styleable.DayColorView_exampleDimension,
-                mExampleDimension);
+        captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, captionTextSize);
 
-        if (a.hasValue(R.styleable.DayColorView_exampleDrawable)) {
-            mExampleDrawable = a.getDrawable(
-                    R.styleable.DayColorView_exampleDrawable);
-            mExampleDrawable.setCallback(this);
-        }
+        dayCircleColor = a.getColor(R.styleable.DayColorView_dayCircleColor, ContextCompat.getColor(context,R.color.tempo_undecided_day_bg));
 
         a.recycle();
 
