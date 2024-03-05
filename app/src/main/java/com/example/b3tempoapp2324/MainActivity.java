@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateTempoDaysColor() {
-        Call<TempoDaysColor> call = edfApi.getTempoDaysColor("2024-03-05", IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
+        Call<TempoDaysColor> call = edfApi.getTempoDaysColor(Tools.getNowDate("yyyy-MM-dd"), IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call.enqueue(new Callback<TempoDaysColor>() {
 
