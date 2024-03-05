@@ -94,18 +94,18 @@ public class DayColorView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-        // Draw the text.
-        canvas.drawText(mExampleString,
-                paddingLeft + (contentWidth - mTextWidth) / 2,
-                paddingTop + (contentHeight + mTextHeight) / 2,
-                mTextPaint);
-
         // Draw the example drawable on top of the text.
         if (mExampleDrawable != null) {
             mExampleDrawable.setBounds(paddingLeft, paddingTop,
                     paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
         }
+
+        // Draw the text.
+        canvas.drawText(mExampleString,
+                paddingLeft + (contentWidth - mTextWidth) / 2,
+                paddingTop + (contentHeight + mTextHeight) / 2,
+                mTextPaint);
     }
 
     /**
