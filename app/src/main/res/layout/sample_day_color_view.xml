@@ -4,12 +4,11 @@
     android:layout_height="match_parent">
 
     <com.example.b3tempoapp2324.DayColorView
-        style="@style/Widget.Theme.B3TempoApp2324.MyView"
+        style="@style/Widget.Theme.B3TempoApp2324.DayColorView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:exampleDimension="24sp"
-        app:exampleDrawable="@android:drawable/ic_delete"
-        app:exampleColor="@color/black"
-        app:exampleString="Hello, INFO B3" />
-
+        app:dayCircleColor="@color/tempo_undecided_day_bg"
+        app:captionTextSize="28sp"
+        app:captionTextColor="@color/black"
+        app:captionText="Hello, INFO B3" />
 </FrameLayout>
