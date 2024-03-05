@@ -11,7 +11,7 @@ public class TempoDate {
     private String date;
     @SerializedName("couleur")
     @Expose
-    private String couleur;
+    private TempoColor couleur;
 
     public String getDate() {
         return date;
@@ -21,11 +21,11 @@ public class TempoDate {
         this.date = date;
     }
 
-    public String getCouleur() {
+    public TempoColor getCouleur() {
         return couleur;
     }
 
-    public void setCouleur(String couleur) {
+    public void setCouleur(TempoColor couleur) {
         this.couleur = couleur;
     }
 
