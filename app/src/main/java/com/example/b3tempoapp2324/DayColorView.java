@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 public class DayColorView extends View {
     private static final float CIRCLE_SCALE = 0.9f;
     private String captionText;
-    private int captionTextColor = Color.RED;
+    private int captionTextColor = Color.BLACK;
     private float captionTextSize = 0;
     private int dayCircleColor = Color.GRAY;
 
@@ -54,7 +54,7 @@ public class DayColorView extends View {
         captionTextColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionTextColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
-        captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, captionTextSize);
+        captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, getResources().getDimension(R.dimen.tempo_color_view_text_size));
 
         dayCircleColor = a.getColor(R.styleable.DayColorView_dayCircleColor, ContextCompat.getColor(context, R.color.tempo_undecided_day_bg));
 
