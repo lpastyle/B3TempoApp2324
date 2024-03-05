@@ -16,12 +16,15 @@ import androidx.core.content.ContextCompat;
  * TODO: document your custom view class.
  */
 public class DayColorView extends View {
+    private static final float CIRCLE_SCALE = 0.9f;
     private String captionText;
-    private int captionTextColor = Color.BLACK;
+    private int captionTextColor = Color.RED;
     private float captionTextSize = 0;
     private int dayCircleColor = Color.GRAY;
 
     private TextPaint textPaint;
+    private Paint circlePaint;
+
     private float textWidth;
     private float textHeight;
 
@@ -60,6 +63,10 @@ public class DayColorView extends View {
         // Set up a default TextPaint object
         textPaint = new TextPaint();
         setTextPaintAndMeasurements();
+
+        // set up a default paint object
+        circlePaint = new Paint();
+        setCirclePaint();
     }
 
     private void setTextPaintAndMeasurements() {
@@ -74,6 +81,11 @@ public class DayColorView extends View {
         textHeight = fontMetrics.bottom;
     }
 
+    private void setCirclePaint() {
+        // set up a paint object to draw circle
+        circlePaint.setStyle(Paint.Style.FILL);
+        circlePaint.setColor(dayCircleColor);
+    }
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
@@ -88,6 +100,11 @@ public class DayColorView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+
+        float cx = (float) contentWidth / 2;
+        float cy = (float) contentHeight / 2;
+        float radius = Math.min(contentHeight,contentWidth) * 0.5f * CIRCLE_SCALE;
+        canvas.drawCircle(cx, cy, radius, circlePaint);
 
         // Draw the text.
         canvas.drawText(captionText,

@@ -7,9 +7,8 @@
         style="@style/Widget.Theme.B3TempoApp2324.DayColorView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:paddingLeft="20dp"
         app:dayCircleColor="@color/tempo_undecided_day_bg"
         app:captionTextSize="28sp"
         app:captionTextColor="@color/black"
-        app:captionText="Hello, INFO B3" />
+        app:captionText="Hello world !" />
 </FrameLayout>
