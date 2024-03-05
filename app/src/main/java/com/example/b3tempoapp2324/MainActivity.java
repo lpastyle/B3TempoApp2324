@@ -7,6 +7,8 @@ import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
+
 import java.net.HttpURLConnection;
 import java.time.LocalDate;
 
@@ -17,12 +19,15 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private ActivityMainBinding binding;
     IEdfApi edfApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Retrofit retrofitClient = ApiClient.get();
         if (retrofitClient != null) {
