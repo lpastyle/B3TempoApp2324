@@ -49,7 +49,6 @@ public class DayColorView extends View {
         captionText = text == null ? "Preview Text" : text;
 
         captionTextColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionTextColor);
-
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
         captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, captionTextSize);
@@ -91,7 +90,7 @@ public class DayColorView extends View {
 
 
         // Draw the text.
-        canvas.drawText(mExampleString,
+        canvas.drawText(captionText,
                 paddingLeft + (contentWidth - textWidth) / 2,
                 paddingTop + (contentHeight + textHeight) / 2,
                 textPaint);
@@ -105,7 +104,7 @@ public class DayColorView extends View {
      * @param exampleColor The example color attribute value to use.
      */
     public void setExampleColor(int exampleColor) {
-        mExampleColor = exampleColor;
+        captionTextColor = exampleColor;
         setTextPaintAndMeasurements();
     }
 
