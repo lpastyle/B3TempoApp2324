@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        updateNbTempoDaysLeft();
-
         Call<TempoDaysColor> call2 = edfApi.getTempoDaysColor("2024-03-05", IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call2.enqueue(new Callback<TempoDaysColor>() {
@@ -61,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateNbTempoDaysLeft();
+    }
 
     private void updateNbTempoDaysLeft() {
         Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
