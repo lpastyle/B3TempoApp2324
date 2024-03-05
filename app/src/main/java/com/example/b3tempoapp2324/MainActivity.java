@@ -3,14 +3,12 @@ package com.example.b3tempoapp2324;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
 
 import java.net.HttpURLConnection;
-import java.time.LocalDate;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,32 +35,14 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        Call<TempoDaysColor> call2 = edfApi.getTempoDaysColor("2024-03-05", IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
-        call2.enqueue(new Callback<TempoDaysColor>() {
-
-            @Override
-            public void onResponse(@NonNull Call<TempoDaysColor> call, @NonNull Response<TempoDaysColor> response) {
-                TempoDaysColor tempoDaysColor = response.body();
-                if (response.code() == HttpURLConnection.HTTP_OK && tempoDaysColor != null) {
-                    Log.d(LOG_TAG,"Today color = " + tempoDaysColor.getCouleurJourJ());
-                    Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1());
-                } else {
-                    Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<TempoDaysColor> call, @NonNull Throwable t) {
-                Log.e(LOG_TAG, "call to getTempoDaysColor() failed ");
-            }
-        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateNbTempoDaysLeft();
+        updateTempoDaysColor();
     }
 
     private void updateNbTempoDaysLeft() {
@@ -90,5 +70,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void updateTempoDaysColor() {
+        Call<TempoDaysColor> call = edfApi.getTempoDaysColor("2024-03-05", IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
+
+        call.enqueue(new Callback<TempoDaysColor>() {
+
+            @Override
+            public void onResponse(@NonNull Call<TempoDaysColor> call, @NonNull Response<TempoDaysColor> response) {
+                TempoDaysColor tempoDaysColor = response.body();
+                if (response.code() == HttpURLConnection.HTTP_OK && tempoDaysColor != null) {
+                    Log.d(LOG_TAG,"Today color = " + tempoDaysColor.getCouleurJourJ());
+                    Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1());
+                    binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
+                    binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
+                } else {
+                    Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TempoDaysColor> call, @NonNull Throwable t) {
+                Log.e(LOG_TAG, "call to getTempoDaysColor() failed ");
+            }
+        });
     }
 }

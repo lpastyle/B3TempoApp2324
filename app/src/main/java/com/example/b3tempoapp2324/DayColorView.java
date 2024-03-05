@@ -113,16 +113,10 @@ public class DayColorView extends View {
                 textPaint);
     }
 
-
-    /**
-     * Sets the view"s example color attribute value. In the example view, this color
-     * is the font color.
-     *
-     * @param exampleColor The example color attribute value to use.
-     */
-    public void setExampleColor(int exampleColor) {
-        captionTextColor = exampleColor;
-        setTextPaintAndMeasurements();
+    public void setDayCircleColor(TempoColor color) {
+        dayCircleColor = ContextCompat.getColor(getContext(),color.getColorResId());
+        setCirclePaint();
+        invalidate();
     }
 
 
