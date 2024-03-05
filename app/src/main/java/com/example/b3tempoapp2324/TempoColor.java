@@ -14,4 +14,12 @@ public enum TempoColor {
         this.colorResId = colorResId;
         this.stringResId = stringResId;
     }
+
+    public int getColorResId() {
+        return colorResId;
+    }
+
+    public int getStringResId() {
+        return stringResId;
+    }
 }
