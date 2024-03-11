@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.b3tempoapp2324.databinding.ActivityHistoryBinding;
 
@@ -45,6 +46,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void updateTempoHistory() {
         Call<TempoHistory> call = edfApi.getTempoHistory("2023","2024");
+        binding.tempoHistoryPb.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<TempoHistory>() {
             @Override
             public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
@@ -56,12 +58,13 @@ public class HistoryActivity extends AppCompatActivity {
                 } else {
                     Log.e(LOG_TAG," call to getTempoHistory() failed with error code "+ response.code());
                 }
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
                 Log.e(LOG_TAG," call to getTempoHistory() failed");
-
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
         });
     }
