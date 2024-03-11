@@ -1,5 +1,6 @@
 package com.example.b3tempoapp2324;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private ActivityMainBinding binding;
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Init views
+        binding.historyBt.setOnClickListener(this);
+
+        // Init RETROFIT client
         Retrofit retrofitClient = ApiClient.get();
         if (retrofitClient != null) {
             edfApi = retrofitClient.create(IEdfApi.class);
@@ -99,9 +104,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void showHistory(View view) {
+    /* deprecated way to handle button click based on the 'onClick' XML Button attribute
+       public void showHistory(View view) {
         Intent intent = new Intent();
         intent.setClass(this,HistoryActivity.class);
         startActivity(intent);
+    } */
+
+    @Override
+    public void onClick(View v) {
+        Log.d(LOG_TAG,"onClick()");
+        if (v.getId() == R.id.history_bt) {
+            Intent intent = new Intent();
+            intent.setClass(this, HistoryActivity.class);
+            startActivity(intent);
+        } else {
+            Log.w(LOG_TAG,"unhandled onClick event !");
+        }
     }
 }
