@@ -24,7 +24,8 @@ public class HistoryActivity extends AppCompatActivity {
     private final static String LOG_TAG = HistoryActivity.class.getSimpleName();
     private ActivityHistoryBinding binding;
 
-    List<TempoDate> tempoDates = new ArrayList<>();
+    private List<TempoDate> tempoDates = new ArrayList<>();
+    private TempoDateAdapter tempoDateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class HistoryActivity extends AppCompatActivity {
         // Init recycler view
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
-        binding.tempoHistoryRv.setAdapter(new TempoDateAdapter(tempoDates, this));
+        tempoDateAdapter = new TempoDateAdapter(tempoDates, this);
+        binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
 
         updateTempoHistory();
 
@@ -50,6 +52,7 @@ public class HistoryActivity extends AppCompatActivity {
                 if (response.code() == HttpURLConnection.HTTP_OK && response.body()!= null) {
                     tempoDates.addAll(response.body().getTempoDates());
                     Log.d(LOG_TAG,"nb elements = " + tempoDates.size());
+                    tempoDateAdapter.notifyDataSetChanged();
                 } else {
                     Log.e(LOG_TAG," call to getTempoHistory() failed with error code "+ response.code());
                 }
