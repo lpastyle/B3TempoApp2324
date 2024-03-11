@@ -3,8 +3,10 @@ package com.example.b3tempoapp2324;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
 
@@ -95,5 +97,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, "call to getTempoDaysColor() failed ");
             }
         });
+    }
+
+    public void showHistory(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this,HistoryActivity.class);
+        startActivity(intent);
     }
 }

@@ -104,6 +104,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:onClick="showHistory"
         android:text="@string/history_bt"
         android:textSize="@dimen/history_button_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
