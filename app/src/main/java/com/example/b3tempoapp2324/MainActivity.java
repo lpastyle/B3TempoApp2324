@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private ActivityMainBinding binding;
-    IEdfApi edfApi;
+    public static IEdfApi edfApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
