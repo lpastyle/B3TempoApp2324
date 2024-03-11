@@ -10,11 +10,11 @@ public class TempoHistory {
     @Expose
     private List<TempoDate> dates;
 
-    public List<TempoDate> getDates() {
+    public List<TempoDate> getTempoDates() {
         return dates;
     }
 
-    public void setDates(List<TempoDate> dates) {
+    public void setTempoDates(List<TempoDate> dates) {
         this.dates = dates;
     }
 
