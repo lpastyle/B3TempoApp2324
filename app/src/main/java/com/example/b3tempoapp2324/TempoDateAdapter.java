@@ -1,5 +1,6 @@
 package com.example.b3tempoapp2324;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.Layer;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,12 +18,14 @@ import java.util.List;
 public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.TempoDateViewHolder> {
 
     private List<TempoDate> tempoDates;
+    private Context context;
 
     /*
      * CTor
      */
-    public TempoDateAdapter(List<TempoDate> tempoDates) {
+    public TempoDateAdapter(List<TempoDate> tempoDates, Context context) {
         this.tempoDates = tempoDates;
+        this.context = context;
     }
 
     @NonNull
@@ -33,7 +37,8 @@ public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.Temp
 
     @Override
     public void onBindViewHolder(@NonNull TempoDateViewHolder holder, int position) {
-
+        holder.dateTv.setText(tempoDates.get(position).getDate());
+        holder.colorFl.setBackgroundColor(ContextCompat.getColor(context, tempoDates.get(position).getCouleur().getColorResId()));
     }
 
     @Override

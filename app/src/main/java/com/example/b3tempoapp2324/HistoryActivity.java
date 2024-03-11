@@ -35,7 +35,7 @@ public class HistoryActivity extends AppCompatActivity {
         // Init recycler view
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
-        binding.tempoHistoryRv.setAdapter(new TempoDateAdapter(tempoDates));
+        binding.tempoHistoryRv.setAdapter(new TempoDateAdapter(tempoDates, this));
 
         updateTempoHistory();
 
