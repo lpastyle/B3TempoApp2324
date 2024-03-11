@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class TempoDateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.TempoDateViewHolder> {
 
     private List<TempoDate> tempoDates;
 
@@ -26,13 +26,13 @@ public class TempoDateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TempoDateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tempo_date_item,parent,false);
         return new TempoDateViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TempoDateViewHolder holder, int position) {
 
     }
 
