@@ -1,13 +1,12 @@
 package com.example.b3tempoapp2324;
 
-import androidx.annotation.LongDef;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
 
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1());
                     binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
                     binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
+                    sendColorNotification();
                 } else {
                     Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code " + response.code());
                 }
@@ -102,6 +102,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(LOG_TAG, "call to getTempoDaysColor() failed ");
             }
         });
+    }
+
+    /**
+     * Create a notification channel for each tempo color
+     */
+    private void createNotificationChannels() {
+
+    }
+
+    private void sendColorNotification() {
+        Log.d(LOG_TAG,"sendColorNotification()");
     }
 
     /* deprecated way to handle button click based on the 'onClick' XML Button attribute
