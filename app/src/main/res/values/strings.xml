@@ -26,5 +26,7 @@
     <string name="blue_channel_name">Jours bleus</string>
     <string name="blue_channel_description">Alertes Tempo pour les jours bleus</string>
 
+    <string name="tempo_notif_title">Alerte Tempo</string>
+    <string name="tempo_notif_text">"Demain jour %s"</string>
 
 </resources>

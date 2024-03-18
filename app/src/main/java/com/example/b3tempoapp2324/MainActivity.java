@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateTempoDaysColor() {
-        Call<TempoDaysColor> call = edfApi.getTempoDaysColor(Tools.getNowDate("yyyy-MM-dd"), IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
+        Call<TempoDaysColor> call = edfApi.getTempoDaysColor("2023-12-17"/*Tools.getNowDate("yyyy-MM-dd")*/, IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call.enqueue(new Callback<TempoDaysColor>() {
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1());
                     binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
                     binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
-                    sendColorNotification();
+                    sendColorNotification(tempoDaysColor.getCouleurJourJ1());
                 } else {
                     Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code " + response.code());
                 }
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void sendColorNotification() {
-        Log.d(LOG_TAG,"sendColorNotification()");
+    private void sendColorNotification(TempoColor color) {
+        Log.d(LOG_TAG,"sendColorNotification("+ color +")");
     }
 
     /* deprecated way to handle button click based on the 'onClick' XML Button attribute
