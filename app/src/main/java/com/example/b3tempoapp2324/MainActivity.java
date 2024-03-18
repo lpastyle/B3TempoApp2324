@@ -3,6 +3,7 @@ package com.example.b3tempoapp2324;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,9 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String RED_TEMPO_ALERT_CHANNEL_ID = "red_tempo_alert_channel_id";
     public static final String WHITE_TEMPO_ALERT_CHANNEL_ID = "white_tempo_alert_channel_id";
     public static final String BLUE_TEMPO_ALERT_CHANNEL_ID = "blue_tempo_alert_channel_id";
+    private static final String YYYY_MM_DD_DATE_PATTERN = "yyyy-MM-dd";
+    private static final String LAST_TEMPO_NOTIFICATION_DATE_KEY = "last_tempo_notification_date";
 
     private ActivityMainBinding binding;
     public static IEdfApi edfApi;
+
+    // local data persistence
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.historyBt.setOnClickListener(this);
 
         // Create notification channels
+        sharedPref = getPreferences(MODE_PRIVATE);
         createNotificationChannels();
 
         // Init RETROFIT client
@@ -155,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void sendColorNotification(TempoColor color) {
         Log.d(LOG_TAG,"sendColorNotification("+ color +")");
-        if (color != TempoColor.UNKNOWN && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        if (color != TempoColor.UNKNOWN && !wasUserAlreadyNotified() && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             String notificationChannelId;
             switch (color) {
                 case RED:
@@ -180,9 +187,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             // show notification (Id is a unique int for each notification)
             notificationManager.notify(Tools.getNextNotifId(), builder.build());
+
+            // save the notification date in shared preference
+            sharedPref.edit().putString(LAST_TEMPO_NOTIFICATION_DATE_KEY, Tools.getNowDate(YYYY_MM_DD_DATE_PATTERN)).apply();
+
         }
     }
 
+    private boolean wasUserAlreadyNotified() {
+        String lastTempoNotificationDate = sharedPref.getString(LAST_TEMPO_NOTIFICATION_DATE_KEY,"");
+        Log.d(LOG_TAG, "lastTempoNotificationDate="+lastTempoNotificationDate);
+        return lastTempoNotificationDate.equals(Tools.getNowDate(YYYY_MM_DD_DATE_PATTERN));
+    }
     /* deprecated way to handle button click based on the 'onClick' XML Button attribute
        public void showHistory(View view) {
         Intent intent = new Intent();
