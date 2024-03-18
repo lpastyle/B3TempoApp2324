@@ -3,9 +3,12 @@ package com.example.b3tempoapp2324;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Tools {
 
+    private static AtomicInteger atomicInteger = null;
+    private static final int INITIAL_GENERATOR_VALUE = 2024;
     // To prevent object instantiation
     private Tools() {
     }
@@ -25,6 +28,15 @@ public class Tools {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.FRANCE);
         Date now = new Date();
         return sdf.format(now);
+    }
+
+    public static int getNextNotifId() {
+        if (atomicInteger == null) {
+            atomicInteger = new AtomicInteger(INITIAL_GENERATOR_VALUE);
+            return atomicInteger.get();
+        } else {
+            return atomicInteger.incrementAndGet();
+        }
     }
 
 }

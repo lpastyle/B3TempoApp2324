@@ -3,12 +3,16 @@ package com.example.b3tempoapp2324;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
 
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateTempoDaysColor() {
-        Call<TempoDaysColor> call = edfApi.getTempoDaysColor("2023-12-17"/*Tools.getNowDate("yyyy-MM-dd")*/, IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
+        Call<TempoDaysColor> call = edfApi.getTempoDaysColor(Tools.getNowDate("yyyy-MM-dd"), IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call.enqueue(new Callback<TempoDaysColor>() {
 
@@ -151,6 +155,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void sendColorNotification(TempoColor color) {
         Log.d(LOG_TAG,"sendColorNotification("+ color +")");
+        if (color != TempoColor.UNKNOWN && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            String notificationChannelId;
+            switch (color) {
+                case RED:
+                    notificationChannelId = RED_TEMPO_ALERT_CHANNEL_ID;
+                    break;
+                case WHITE:
+                    notificationChannelId = WHITE_TEMPO_ALERT_CHANNEL_ID;
+                    break;
+                default:
+                    notificationChannelId = BLUE_TEMPO_ALERT_CHANNEL_ID;
+            }
+
+            // get notification manager
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+            // create notification
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, notificationChannelId)
+                    .setSmallIcon(R.mipmap.ic_launcher) // mandatory setting !
+                    .setContentTitle(getString(R.string.tempo_notif_title))
+                    .setContentText(getString(R.string.tempo_notif_text, getString(color.getStringResId())))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            // show notification (Id is a unique int for each notification)
+            notificationManager.notify(Tools.getNextNotifId(), builder.build());
+        }
     }
 
     /* deprecated way to handle button click based on the 'onClick' XML Button attribute
