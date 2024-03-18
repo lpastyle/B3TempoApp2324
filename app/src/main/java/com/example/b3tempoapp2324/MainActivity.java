@@ -1,5 +1,7 @@
 package com.example.b3tempoapp2324;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.b3tempoapp2324.databinding.ActivityMainBinding;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +23,9 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public static final String RED_TEMPO_ALERT_CHANNEL_ID = "red_tempo_alert_channel_id";
+    public static final String WHITE_TEMPO_ALERT_CHANNEL_ID = "white_tempo_alert_channel_id";
+    public static final String BLUE_TEMPO_ALERT_CHANNEL_ID = "blue_tempo_alert_channel_id";
 
     private ActivityMainBinding binding;
     public static IEdfApi edfApi;
@@ -31,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Init views
         binding.historyBt.setOnClickListener(this);
+
+        // Create notification channels
+        createNotificationChannels();
 
         // Init RETROFIT client
         Retrofit retrofitClient = ApiClient.get();
@@ -108,6 +118,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Create a notification channel for each tempo color
      */
     private void createNotificationChannels() {
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        List<NotificationChannel> channels = new ArrayList<>();
+
+        NotificationChannel channel = new NotificationChannel(
+                BLUE_TEMPO_ALERT_CHANNEL_ID,
+                getString(R.string.blue_channel_name),
+                importance);
+        channel.setDescription(getString(R.string.blue_channel_description));
+        channels.add(channel);
+
+        channel = new NotificationChannel(
+                WHITE_TEMPO_ALERT_CHANNEL_ID,
+                getString(R.string.white_channel_name),
+                importance);
+        channel.setDescription(getString(R.string.white_channel_description));
+        channels.add(channel);
+
+        channel = new NotificationChannel(
+                RED_TEMPO_ALERT_CHANNEL_ID,
+                getString(R.string.red_channel_name),
+                importance);
+        channel.setDescription(getString(R.string.red_channel_description));
+        channels.add(channel);
+
+        // Register the channels with the system; you can't change the importance
+        // or other notification behaviors after this
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannels(channels);
 
     }
 
